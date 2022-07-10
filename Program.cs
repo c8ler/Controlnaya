@@ -2,36 +2,52 @@
 Console.Write("Введите кол-во элементов массива: ");
 int size = int.Parse(Console.ReadLine());  // ввод кол-ва элементов будущего массива
 
-string[] array = new string[size];
-
-for (int i = 0; i < size; i++)  // поочерёдный ввод элементов массива
+string[] array = FillArray(size);
+int newSize = FindNewSize(array, size);
+if (newSize == 0)
 {
-    Console.Write($"Введите {i}-й элемент массива: ");
-    array[i] = Convert.ToString(Console.ReadLine());
-}
-
-int newN = 0;
-for (int k = 0; k < size; k++)  // определение кол-ва элементов массива, меньших 4 символов
-{
-    if (array[k].Length < 4) newN++;
-}
-
-if (newN == 0)
-{
-    Console.WriteLine();
-    Console.WriteLine("->");
-    Console.WriteLine("[]");
+    PrintArr(array, size);
+    Print0SizeArray();
 }
 else
 {
-    // заполнение элементов нового массива
-    string[] newArray = array.Where(x => x.Length <= 3).ToArray();
-
-    print2Arr(array, size, newArray, newN);
+    Print2Arr(array, size, FillNewArray(array), newSize);
 }
 
 
-void printArr (string[] arr, int sizeArr)
+string[] FillArray(int size1)
+{
+    string[] arr1 = new string[size1];
+    for (int i = 0; i < size1; i++)  // поочерёдный ввод элементов массива
+    {
+        Console.Write($"Введите {i}-й элемент массива: ");
+        arr1[i] = Convert.ToString(Console.ReadLine());
+    }
+    return arr1;
+}
+
+int FindNewSize(string[] arr1, int size1)
+{
+    int nSize = 0;
+    for (int k = 0; k < size1; k++)  // определение кол-ва элементов массива, меньших 4 символов
+    {
+        if (arr1[k].Length < 4) nSize++;
+    }
+    return nSize;
+}
+
+void Print0SizeArray()
+{
+    Console.Write(" -> []");
+}
+
+string[] FillNewArray(string[] arr1)
+{
+    string[] arr2 = arr1.Where(x => x.Length <= 3).ToArray();
+    return arr2;
+}
+
+void PrintArr(string[] arr, int sizeArr)
 {
     Console.Write("[");
     for (int j = 0; j < sizeArr - 1; j++)
@@ -41,10 +57,9 @@ void printArr (string[] arr, int sizeArr)
     Console.Write($"\"{arr[sizeArr - 1]}\"]");
 }
 
-void print2Arr (string[] arr1, int sizeArr1, string[] arr2, int sizeArr2)
+void Print2Arr(string[] arr1, int sizeArr1, string[] arr2, int sizeArr2)
 {
-    printArr(arr1, sizeArr1);
-    Console.WriteLine();
-    Console.WriteLine("->");
-    printArr(arr2, sizeArr2);
+    PrintArr(arr1, sizeArr1);
+    Console.Write(" -> ");
+    PrintArr(arr2, sizeArr2);
 }
