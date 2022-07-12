@@ -1,6 +1,7 @@
-﻿Console.Clear();
-Console.Write("Введите кол-во элементов массива: ");
-int size = int.Parse(Console.ReadLine());  // ввод кол-ва элементов будущего массива
+﻿
+Console.Clear();
+Console.Write("Введите кол-во элементов в массиве: ");
+int size = Convert.ToInt32(Console.ReadLine());
 
 string[] array = FillArray(size);
 int newSize = FindNewSize(array, size);
